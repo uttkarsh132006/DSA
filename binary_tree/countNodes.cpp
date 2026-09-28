@@ -77,3 +77,51 @@ public:
 };
 
 
+int lh(TreeNode* root){
+    if(!root){
+        
+        return 0;
+    }
+    int leftH=lh(root->left);
+    leftH++;
+    return leftH;
+
+}
+int rh(TreeNode* root){
+    if(!root){
+        return 0;
+    }
+    int rightH=rh(root->right);
+    rightH++;
+    return rightH;
+}
+
+ 
+
+ 
+
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if(!root)return 0;
+
+        
+        int leftHieght=lh(root);
+        int rightHieght=rh(root);
+
+        if(leftHieght==rightHieght)return pow(2,leftHieght)-1;
+
+        return 1+ countNodes(root->left)+countNodes(root->right); // see as we know there will be a complete tree 
+        
+        
+        
+
+
+    }
+};
+
+
+
+
+
+
