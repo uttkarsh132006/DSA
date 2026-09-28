@@ -76,7 +76,7 @@ public:
     }
 };
 
-
+//orignal optimised soln
 int lh(TreeNode* root){
     if(!root){
         
