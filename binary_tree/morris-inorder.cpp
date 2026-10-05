@@ -47,4 +47,5 @@ vector<int> morrisINORDER(TreeNode* root){
             }
         }
     }
+    return INORDER;
 }
