@@ -26,8 +26,9 @@ class Solution {
                 root=root->left;
             }
             else{
-                if(!pre)pre=root;
-                if(pre->data<root->data)pre=root;
+                // if(!pre)pre=root;
+                // if(pre->data<root->data)pre=root; //we need not to check just simply 
+                pre=root;
                 root=root->right;
             }
         }
@@ -38,8 +39,9 @@ class Solution {
                 curr=curr->right;
             }
             else{
-                if(!succ)succ=curr;
-                if(succ->data>curr->data)succ=curr;
+                // if(!succ)succ=curr;
+                // if(succ->data>curr->data)succ=curr;//smae here
+                succ=root;
                 curr=curr->left;
             }
         }
