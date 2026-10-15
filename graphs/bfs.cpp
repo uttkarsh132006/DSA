@@ -7,11 +7,11 @@ class Solution {
     
     vector<int> bfsOfGraph(int V, vector<vector<int>> edges) {//V is number of nodes
       vector<int>bfs;  
-      vector<int>vis(V+1);
+      vector<int>vis(V);
       queue<int>q;
-      vis[1]=1;
+      vis[0]=1;
 
-      q.push(1);
+      q.push(0);
       while(!q.empty()){
         int node = q.front();
         q.pop();
