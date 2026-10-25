@@ -3,38 +3,48 @@
 #include<unordered_set>
 using namespace std;
 
+
+
+//kahn algo to find cycle using bfs
 class Solution {
 private:
-    bool bipartite(int src, vector<vector<int>>& graph, vector<int>& color) {
-        queue<int> q;
-        q.push(src);
-        color[src] = 0;
+    // Helper: build adjacency list (edge b -> a) and fill indegree
+    vector<vector<int>> adj(vector<vector<int>>& pre, int numCourses,
+                            vector<int>& indegree) {
+        vector<vector<int>> ans(numCourses);
+        for (auto& a : pre) {
+            ans[a[1]].push_back(a[0]);
+            indegree[a[0]]++;              // a has one more prerequisite
+        }
+        return ans;
+    }
 
+    // Helper: returns true if a cycle exists
+    bool detectCycle(int numCourses, vector<vector<int>>& adj,
+                     vector<int>& indegree) {
+        queue<int> q;
+        for (int i = 0; i < numCourses; i++)
+            if (indegree[i] == 0) q.push(i);
+
+        int processed = 0;
         while (!q.empty()) {
             int node = q.front();
             q.pop();
+            processed++;
 
-            for (int it : graph[node]) {
-                if (color[it] == -1) {
-                    color[it] = 1 - color[node];
+            for (int it : adj[node]) {
+                if (--indegree[it] == 0)
                     q.push(it);
-                } else if (color[it] == color[node]) {
-                    return false;           // same color on both ends of an edge
-                }
             }
         }
-        return true;
+        return processed != numCourses;    // leftover nodes => cycle
     }
 
 public:
-    bool isBipartite(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int> color(n, -1);
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> indegree(numCourses, 0);
+        vector<vector<int>> adjency = adj(prerequisites, numCourses, indegree);
 
-        for (int i = 0; i < n; i++) {
-            if (color[i] == -1 && !bipartite(i, graph, color))
-                return false;
-        }
-        return true;
+        return !detectCycle(numCourses, adjency, indegree);
     }
 };
