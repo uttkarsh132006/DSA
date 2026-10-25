@@ -15,7 +15,10 @@ private:
         
         vis[src]=true;
         for(auto it:adj[src]){
-            dfs(it,adj,vis,st);
+            if(!vis[it]){
+                dfs(it,adj,vis,st);
+            }
+            
         }
         st.push(src);//at end to push it when every dfs go good
         
